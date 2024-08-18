@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: white;
+}
+
+.placeholder-small::placeholder {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+@keyframes neon-border {
+  0% {
+    box-shadow: 0 0 5px #44d62c, inset 0 0 1px #44d62c, 0 0 5px #44d62c,
+      inset 0 0 2px #44d62c;
+    border-color: #44d62c;
+  }
+  50% {
+    box-shadow: 0 0 5px #44d62c, inset 0 0 3px #44d62c, 0 0 5px #44d62c,
+      inset 0 0 3px #44d62c;
+    border-color: #44d62c;
+  }
+  100% {
+    box-shadow: 0 0 1px #44d62c, inset 0 0 1px #44d62c, 0 0 5px #44d62c,
+      inset 0 0 2px #44d62c;
+    border-color: #44d62c;
+  }
+}
+
+.animate-neon-border {
+  animation: neon-border 2s infinite alternate;
+  border: 1px solid #44d62c;
+  border-radius: 1px;
+}
+
+.text-green-razer {
+  color: #44d62c !important;
+}
+
+.placeholder-sm::placeholder {
+  font-size: 0.75rem; /* Tailwind's text-xs */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1c1c1c;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #00ff00; /* 레이저 브랜드 감성의 초록색 */
+  border-radius: 10px;
+  border: 1px solid #00ff00;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #00ff00 #1c1c1c;
+}

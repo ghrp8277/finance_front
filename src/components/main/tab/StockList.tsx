@@ -3,6 +3,7 @@ import { fetchStockList } from "@/services/stock";
 import { IStock } from "@/types/stock";
 import { useNavigate } from "@/hooks/useNavigate";
 import { Card } from "@/components/index";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 type StockListProps = {
   market: string;
@@ -20,10 +21,12 @@ const StockList: React.FC<StockListProps> = ({
   onTotalPagesChange,
 }) => {
   const [stocks, setStocks] = useState<IStock[]>([]);
+  const [loading, setLoading] = useState<boolean>(false); // 추가된 상태
   const { navigateToStockDetail } = useNavigate();
 
   useEffect(() => {
     const loadStockList = async () => {
+      setLoading(true);
       const { stocks, total_pages } = await fetchStockList(
         market,
         {
@@ -32,9 +35,9 @@ const StockList: React.FC<StockListProps> = ({
         },
         sortOption
       );
-
       setStocks(stocks);
       onTotalPagesChange(total_pages);
+      setLoading(false);
     };
 
     loadStockList();
@@ -50,7 +53,9 @@ const StockList: React.FC<StockListProps> = ({
 
   return (
     <div className="w-4/5 mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
-      {stocks.length > 0 ? (
+      {loading ? (
+        <LoadingSpinner />
+      ) : stocks.length > 0 ? (
         stocks.map((stock) => (
           <Card
             key={stock.code}

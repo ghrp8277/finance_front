@@ -7,16 +7,19 @@ import {
 import { IPost } from "@/types/social";
 import PostDetail from "@/components/social/postForm/PostDetail";
 import { useStorage } from "@/hooks/useStorage";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 const PostDetailPage: React.FC = () => {
   const { getQueryParams } = useNavigate();
   const { id } = getQueryParams();
   const [post, setPost] = useState<IPost | null>(null);
   const { isLoggedIn } = useStorage();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadPostDetail = async () => {
-      if (id) {
+      if (id && isLoggedIn !== null) {
+        setLoading(true);
         if (isLoggedIn) {
           const postDetail = await fetchGetPostDetail(Number(id));
           setPost(postDetail);
@@ -24,14 +27,19 @@ const PostDetailPage: React.FC = () => {
           const postDetail = await fetchGetPublicPostDetail(Number(id));
           setPost(postDetail);
         }
+        setLoading(false);
       }
     };
 
     loadPostDetail();
   }, [id, isLoggedIn]);
 
-  if (!post) {
-    return <div>Loading...</div>;
+  if (loading || !post) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   return (

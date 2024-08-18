@@ -61,7 +61,7 @@ const SignupPage = () => {
   };
 
   const handleSignUp = async () => {
-    const { success } = await fetchSignUp(
+    const { success, err } = await fetchSignUp(
       username,
       password,
       email,
@@ -71,6 +71,13 @@ const SignupPage = () => {
     if (success) {
       navigateToLogin();
       showToast("가입이 완료되었습니다.", constants.TOAST_TYPES.SUCCESS);
+    }
+
+    if (err.status === 409) {
+      showToast(
+        "사용중인 이메일 및 유저정보가 있습니다.",
+        constants.TOAST_TYPES.ERROR
+      );
     }
   };
 

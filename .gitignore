@@ -1,0 +1,60 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Next.js build output
+.next/
+out/
+
+# Parcel cache
+.cache/
+
+# IDE directories and files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 환경 구성 파일
+next.config.mjs
+
+# MacOS
+.DS_Store
+
+# Prettier files
+*.prettierrc
+.prettierignore
+
+# ESLint files
+*.eslintrc.js
+*.eslintrc
+.eslintignore
+
+# Other formatting and linting tools
+.stylelintrc
+.stylelintignore
+.editorconfig
+.eslintrc.json

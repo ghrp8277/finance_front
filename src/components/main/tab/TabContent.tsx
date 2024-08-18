@@ -26,8 +26,8 @@ const TabContent: React.FC<TabContentProps> = ({ market }) => {
   ];
 
   const sortOrderOptions = [
-    { label: "큰순", value: "asc" },
-    { label: "작은순", value: "desc" },
+    { label: "오름차순", value: "asc" },
+    { label: "내림차순", value: "desc" },
   ];
 
   const handlePageChange = (page: number) => {

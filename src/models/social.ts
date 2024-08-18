@@ -184,11 +184,17 @@ export const getDeleteCommentModel = (
 };
 
 export const getIncrementCommentLikesModel = (res: IApiResponse<any>) => {
-  return res.success;
+  return {
+    success: res.success,
+    err: res.error,
+  };
 };
 
 export const getDecrementCommentLikesModel = (res: IApiResponse<any>) => {
-  return res.success;
+  return {
+    success: res.success,
+    err: res.error,
+  };
 };
 
 export const getUnfollowedUsersModel = (
@@ -212,6 +218,7 @@ export const getUnfollowedUsersModel = (
     currentPage: constants.DEFAULT_NUM,
     totalPages: constants.DEFAULT_NUM,
     users: constants.DEFAULT_ITEMS,
+    err: res.error,
   };
 };
 

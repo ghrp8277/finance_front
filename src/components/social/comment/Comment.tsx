@@ -49,16 +49,29 @@ const Comment: React.FC<CommentProps> = ({
 
     if (user) {
       if (isLiked) {
-        const success = await fetchDecrementCommentLikes(comment.id, user.id);
+        const { success, err } = await fetchDecrementCommentLikes(
+          comment.id,
+          user.id
+        );
         if (success) {
           setLikes((prevLikes) => prevLikes - 1);
           setIsLiked(false);
         }
       } else {
-        const success = await fetchIncrementCommentLikes(comment.id, user.id);
+        const { success, err } = await fetchIncrementCommentLikes(
+          comment.id,
+          user.id
+        );
         if (success) {
           setLikes((prevLikes) => prevLikes + 1);
           setIsLiked(true);
+        } else {
+          if (err && err.status === 409) {
+            showToast(
+              "이미 좋아요를 선택하였습니다.",
+              constants.TOAST_TYPES.ERROR
+            );
+          }
         }
       }
     }
@@ -67,7 +80,7 @@ const Comment: React.FC<CommentProps> = ({
   const handleDeleteClick = () => {
     onDeleteComment(comment.id);
   };
-
+  console.log(comment);
   return (
     <div className={`my-4 ${depth > 0 ? `ml-${depth * 4}` : ""}`}>
       <div className="flex">

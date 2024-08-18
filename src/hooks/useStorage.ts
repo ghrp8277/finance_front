@@ -10,7 +10,7 @@ interface User {
 
 export const useStorage = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   useEffect(() => {
     const loginStatus = getItem(constants.LOCAL_STORAGE.LOGIN) === "true";
@@ -21,6 +21,8 @@ export const useStorage = () => {
       if (userData) {
         setUser(JSON.parse(userData));
       }
+    } else {
+      setIsLoggedIn(false);
     }
   }, []);
 

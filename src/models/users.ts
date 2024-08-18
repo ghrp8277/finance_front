@@ -31,5 +31,6 @@ export const getSignupModel = (res: IApiResponse<ISignUpResponse>) => {
     id: constants.DEFAULT_NUM,
     username: constants.DEFAULT_STR,
     success,
+    err: res.error,
   };
 };

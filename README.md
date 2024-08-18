@@ -18,6 +18,7 @@
 
 ## ✅  화면 설계
 ![image](https://github.com/user-attachments/assets/2e46eeb7-7ee0-4a61-93ce-d8d8e4b2772f)
+![20240818_205725](https://github.com/user-attachments/assets/633c5477-8693-42c8-a2f0-ab3706802d52)|![20240818_211707](https://github.com/user-attachments/assets/8b5276ab-4dfb-4fcc-855a-4d8321d09d29)
 
 
 ## ✅ 주요 기능

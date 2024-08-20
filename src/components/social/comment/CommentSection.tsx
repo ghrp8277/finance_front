@@ -102,7 +102,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
       setIsDialogOpen(false);
     }
   };
-  console.log(comments);
+
   return (
     <div className="mx-auto mt-8">
       <h3 className="text-lg font-semibold mb-4 text-green-500">

@@ -1,8 +1,27 @@
 import { get, post } from "@/api";
-import { ICheckUsernameResponse, ISignUpResponse } from "@/types/user";
-import { getCheckUsernameModel, getSignupModel } from "@/models/users";
+import {
+  ICheckUsernameResponse,
+  IGetUserByIdResponse,
+  ISignUpResponse,
+} from "@/types/user";
+import {
+  getChangePasswordModel,
+  getCheckUsernameModel,
+  getSignupModel,
+  getUserByIdModel,
+} from "@/models/users";
 
 const USERS_URL = "users";
+
+export const fetchGetUserById = async (userId: number) => {
+  const response = await get<IGetUserByIdResponse>(
+    `${USERS_URL}/${userId}`,
+    undefined,
+    true
+  );
+
+  return getUserByIdModel(response);
+};
 
 export const fetchCheckUsername = async (username: string) => {
   const response = await get<ICheckUsernameResponse>(
@@ -43,4 +62,22 @@ export const fetchSignUp = async (
   );
 
   return getSignupModel(response);
+};
+
+export const fetchChangePassword = async (
+  userId: number,
+  currentPassword: string,
+  newPassword: string
+) => {
+  const response = await post<any>(
+    `${USERS_URL}/change-password`,
+    {
+      userId,
+      currentPassword,
+      newPassword,
+    },
+    true
+  );
+
+  return getChangePasswordModel(response);
 };

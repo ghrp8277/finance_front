@@ -1,6 +1,10 @@
 import constants from "@/constants";
 import { IApiResponse } from "@/types/common";
-import { ICheckUsernameResponse, ISignUpResponse } from "@/types/user";
+import {
+  ICheckUsernameResponse,
+  IGetUserByIdResponse,
+  ISignUpResponse,
+} from "@/types/user";
 
 export const getCheckUsernameModel = (
   res: IApiResponse<ICheckUsernameResponse>
@@ -29,6 +33,44 @@ export const getSignupModel = (res: IApiResponse<ISignUpResponse>) => {
 
   return {
     id: constants.DEFAULT_NUM,
+    username: constants.DEFAULT_STR,
+    success,
+    err: res.error,
+  };
+};
+
+export const getChangePasswordModel = (res: IApiResponse<any>) => {
+  const success = res.success;
+
+  return {
+    success,
+    err: res.error,
+  };
+};
+
+export const getUserByIdModel = (res: IApiResponse<IGetUserByIdResponse>) => {
+  const success = res.success;
+
+  if (success) {
+    const results = res?.data?.results;
+
+    return {
+      id: results?.id ?? constants.DEFAULT_NUM,
+      email: results?.email ?? constants.DEFAULT_STR,
+      greeting: results?.greeting ?? constants.DEFAULT_STR,
+      joinDate: results?.joinDate ?? constants.DEFAULT_STR,
+      profileImageUrl: results?.profileImageUrl ?? constants.DEFAULT_STR,
+      username: results?.username ?? constants.DEFAULT_STR,
+      success,
+    };
+  }
+
+  return {
+    id: constants.DEFAULT_NUM,
+    email: constants.DEFAULT_STR,
+    greeting: constants.DEFAULT_STR,
+    joinDate: constants.DEFAULT_STR,
+    profileImageUrl: constants.DEFAULT_STR,
     username: constants.DEFAULT_STR,
     success,
     err: res.error,

@@ -42,7 +42,7 @@ const FlowUserList: React.FC = () => {
           {users.map((user) => (
             <Card
               key={user.userId}
-              className="w-48 h-64 !bg-black text-black p-4 rounded-lg border border-gray-300 shadow-sm flex-shrink-0"
+              className="w-48 h-64 text-black p-4 rounded-lg border border-gray-300 shadow-sm flex-shrink-0"
             >
               <img
                 src={"/default-profile.png"}

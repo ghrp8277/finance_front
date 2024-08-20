@@ -8,7 +8,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   const pagesWithoutHeader = ["/login", "/signup"];
-
   const hideHeader = pagesWithoutHeader.includes(router.pathname);
 
   return (

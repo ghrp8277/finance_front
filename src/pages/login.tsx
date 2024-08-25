@@ -16,7 +16,7 @@ const LoginPage = () => {
   const handleLoginClick = async () => {
     setError(null);
 
-    const { success, authenticated, userId, accessToken } = await fetchLogin(
+    const { success, authenticated, userId } = await fetchLogin(
       username,
       password
     );
@@ -25,7 +25,6 @@ const LoginPage = () => {
       const user = JSON.stringify({
         id: userId,
         username,
-        accessToken,
       });
       setItem(
         constants.LOCAL_STORAGE.LOGIN,

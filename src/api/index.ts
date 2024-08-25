@@ -6,20 +6,10 @@ import constants from "@/constants";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 
-const extendedKy = ky.extend({
-  hooks: {
-    beforeRequest: [
-      (request) => {
-        console.log("Before request hook triggered");
-        request.headers.set("Authorization", `token test`);
-      },
-    ],
-  },
-});
-
-const api = extendedKy.create({
+const api = ky.create({
   prefixUrl: API_URL,
   timeout: 10000,
+  credentials: "include"
 });
 
 const getUserIdHeader = (): Record<string, string> => {

@@ -5,7 +5,6 @@ import constants from "@/constants";
 interface User {
   id: number;
   username: string;
-  accessToken: string;
 }
 
 export const useStorage = () => {

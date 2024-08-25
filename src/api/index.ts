@@ -9,7 +9,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 const api = ky.create({
   prefixUrl: API_URL,
   timeout: 10000,
-  credentials: "include"
+  credentials: "include",
 });
 
 const getUserIdHeader = (): Record<string, string> => {
@@ -43,7 +43,7 @@ export const get = async <T>(
 export const post = async <T>(
   url: string,
   data: Record<string, any> | FormData,
-  withCredentials: boolean = false
+  withCredentials: boolean = true
 ): Promise<IApiResponse<T>> => {
   const options: any = {
     method: "POST",
@@ -62,7 +62,7 @@ export const post = async <T>(
 export const put = async <T>(
   url: string,
   data: Record<string, any>,
-  withCredentials: boolean = false
+  withCredentials: boolean = true
 ): Promise<IApiResponse<T>> => {
   const options: any = {
     json: data,
@@ -75,7 +75,7 @@ export const put = async <T>(
 export const patch = async <T>(
   url: string,
   data: Record<string, any>,
-  withCredentials: boolean = false
+  withCredentials: boolean = true
 ): Promise<IApiResponse<T>> => {
   const options: any = {
     json: data,
@@ -88,7 +88,7 @@ export const patch = async <T>(
 export const del = async (
   url: string,
   data?: Record<string, any>,
-  withCredentials: boolean = false
+  withCredentials: boolean = true
 ): Promise<IApiResponse<void>> => {
   const options: any = {
     credentials: withCredentials ? "include" : "same-origin",

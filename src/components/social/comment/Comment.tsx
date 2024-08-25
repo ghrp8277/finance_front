@@ -80,7 +80,7 @@ const Comment: React.FC<CommentProps> = ({
   const handleDeleteClick = () => {
     onDeleteComment(comment.id);
   };
-  console.log(comment);
+
   return (
     <div className={`my-4 ${depth > 0 ? `ml-${depth * 4}` : ""}`}>
       <div className="flex">

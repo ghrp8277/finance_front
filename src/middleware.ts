@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { logRequest } from "./utils/logger";
+import { formatDateTime } from "@/utils/dateUtils";
 
 export function middleware(req: NextRequest) {
   const start = Date.now();
@@ -19,3 +19,11 @@ export function middleware(req: NextRequest) {
 export const config = {
   matcher: "/:path*",
 };
+
+function logRequest(method: string, url: string, ip: string, duration: number) {
+  console.log(
+    `[${formatDateTime(
+      new Date()
+    )}] ${method} ${url} from IP: ${ip} - ${duration}ms`
+  );
+}

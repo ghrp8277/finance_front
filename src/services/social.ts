@@ -44,18 +44,14 @@ export const fetchGetPosts = async (
 export const fetchCreatePost = async (createPostDto: ICreatePostDto) => {
   const { userId, title, author, accountName, content, stockCode } =
     createPostDto;
-  const response = await post<ICreatePostResponse>(
-    `${SOCIAL_URL}/posts`,
-    {
-      userId,
-      title,
-      author,
-      accountName,
-      content,
-      stockCode,
-    },
-    true
-  );
+  const response = await post<ICreatePostResponse>(`${SOCIAL_URL}/posts`, {
+    userId,
+    title,
+    author,
+    accountName,
+    content,
+    stockCode,
+  });
 
   return getCreatePostModel(response);
 };
@@ -88,8 +84,7 @@ export const fetchCreateComment = async (
       userId,
       username,
       content,
-    },
-    true
+    }
   );
 
   return getCreateCommentModel(response);
@@ -108,15 +103,14 @@ export const fetchCreateReply = async (
       userId,
       username,
       content,
-    },
-    true
+    }
   );
 
   return getCreateReplyModel(response);
 };
 
 export const fetchDeleteComment = async (id: number, userId: number) => {
-  const response: any = await del(`${SOCIAL_URL}/comments/${id}`, true, {
+  const response: any = await del(`${SOCIAL_URL}/comments/${id}`, {
     userId,
   });
   return getDeleteCommentModel(response);
@@ -126,13 +120,9 @@ export const fetchIncrementCommentLikes = async (
   id: number,
   userId: number
 ) => {
-  const response = await post(
-    `${SOCIAL_URL}/comments/${id}/like`,
-    {
-      userId,
-    },
-    true
-  );
+  const response = await post(`${SOCIAL_URL}/comments/${id}/like`, {
+    userId,
+  });
   return getIncrementCommentLikesModel(response);
 };
 
@@ -140,13 +130,9 @@ export const fetchDecrementCommentLikes = async (
   id: number,
   userId: number
 ) => {
-  const response = await post(
-    `${SOCIAL_URL}/comments/${id}/unlike`,
-    {
-      userId,
-    },
-    true
-  );
+  const response = await post(`${SOCIAL_URL}/comments/${id}/unlike`, {
+    userId,
+  });
   return getDecrementCommentLikesModel(response);
 };
 
@@ -168,24 +154,16 @@ export const fetchFollowUser = async (
   followerId: number,
   followeeId: number
 ) => {
-  const response = await post<IFollowResponse>(
-    `${SOCIAL_URL}/follow`,
-    {
-      followerId,
-      followeeId,
-    },
-    true
-  );
+  const response = await post<IFollowResponse>(`${SOCIAL_URL}/follow`, {
+    followerId,
+    followeeId,
+  });
 
   return getFollowModel(response);
 };
 
 export const fetchActivityRead = async (id: number) => {
-  const response = await post(
-    `${SOCIAL_URL}/activities/${id}/mark-read`,
-    {},
-    true
-  );
+  const response = await post(`${SOCIAL_URL}/activities/${id}/mark-read`, {});
   return response;
 };
 

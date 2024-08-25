@@ -1,4 +1,5 @@
 import { useState, ReactNode } from "react";
+import EmptyValue from "./EmptyValue";
 
 type Tab = {
   label: string;
@@ -11,6 +12,14 @@ type TabsProps = {
 
 const Tabs: React.FC<TabsProps> = ({ tabs }) => {
   const [activeTab, setActiveTab] = useState(0);
+
+  if (tabs.length === 0) {
+    return (
+      <div className="text-green-500">
+        <EmptyValue placeholder="탭이 존재하지 않습니다." />
+      </div>
+    );
+  }
 
   const currentTab = tabs[activeTab];
 
@@ -35,7 +44,11 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
         className="p-4 border-t rounded-b-lg"
         style={{ borderColor: "#44D62C" }}
       >
-        {currentTab ? currentTab.content : <p>No content available</p>}
+        {currentTab.content ? (
+          currentTab.content
+        ) : (
+          <EmptyValue placeholder="데이터가 비어있습니다." />
+        )}
       </div>
     </div>
   );

@@ -11,7 +11,6 @@ export const fetchLogin = async (username: string, password: string) => {
       username,
       password,
     },
-    false,
     true
   );
 
@@ -24,7 +23,6 @@ export const fetchLogout = async (userId: number) => {
     {
       userId,
     },
-    true,
     true
   );
 

@@ -5,19 +5,22 @@ import { getItem } from "@/utils/localStorage";
 import constants from "@/constants";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
-const api = ky.create({
-  prefixUrl: API_URL,
-  timeout: 10000,
-  credentials: "include",
+
+const extendedKy = ky.extend({
+  hooks: {
+    beforeRequest: [
+      (request) => {
+        console.log("Before request hook triggered");
+        request.headers.set("Authorization", `token test`);
+      },
+    ],
+  },
 });
 
-const getAuthorizationHeader = (): Record<string, string> => {
-  const user = JSON.parse(getItem(constants.LOCAL_STORAGE.USER) || "{}");
-  if (user?.accessToken) {
-    return { Authorization: `Bearer ${user.accessToken}` };
-  }
-  return {};
-};
+const api = extendedKy.create({
+  prefixUrl: API_URL,
+  timeout: 10000,
+});
 
 const getUserIdHeader = (): Record<string, string> => {
   const user = JSON.parse(getItem(constants.LOCAL_STORAGE.USER) || "{}");
@@ -50,7 +53,6 @@ export const get = async <T>(
 export const post = async <T>(
   url: string,
   data: Record<string, any> | FormData,
-  token: boolean = false,
   withCredentials: boolean = false
 ): Promise<IApiResponse<T>> => {
   const options: any = {
@@ -64,33 +66,18 @@ export const post = async <T>(
     options.json = data;
   }
 
-  if (token) {
-    options.headers = {
-      ...options.headers,
-      ...getAuthorizationHeader(),
-    };
-  }
-
   return handleApiResponse<T>(api.post(url, options).json<T>());
 };
 
 export const put = async <T>(
   url: string,
   data: Record<string, any>,
-  token: boolean = false,
   withCredentials: boolean = false
 ): Promise<IApiResponse<T>> => {
   const options: any = {
     json: data,
     credentials: withCredentials ? "include" : "same-origin",
   };
-
-  if (token) {
-    options.headers = {
-      ...options.headers,
-      ...getAuthorizationHeader(),
-    };
-  }
 
   return handleApiResponse<T>(api.put(url, options).json<T>());
 };
@@ -98,7 +85,6 @@ export const put = async <T>(
 export const patch = async <T>(
   url: string,
   data: Record<string, any>,
-  token: boolean = false,
   withCredentials: boolean = false
 ): Promise<IApiResponse<T>> => {
   const options: any = {
@@ -106,32 +92,17 @@ export const patch = async <T>(
     credentials: withCredentials ? "include" : "same-origin",
   };
 
-  if (token) {
-    options.headers = {
-      ...options.headers,
-      ...getAuthorizationHeader(),
-    };
-  }
-
   return handleApiResponse<T>(api.patch(url, options).json<T>());
 };
 
 export const del = async (
   url: string,
-  token: boolean = false,
   data?: Record<string, any>,
   withCredentials: boolean = false
 ): Promise<IApiResponse<void>> => {
   const options: any = {
     credentials: withCredentials ? "include" : "same-origin",
   };
-
-  if (token) {
-    options.headers = {
-      ...options.headers,
-      ...getAuthorizationHeader(),
-    };
-  }
 
   if (data) {
     options.json = data;

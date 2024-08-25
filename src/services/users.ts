@@ -69,15 +69,11 @@ export const fetchChangePassword = async (
   currentPassword: string,
   newPassword: string
 ) => {
-  const response = await post<any>(
-    `${USERS_URL}/change-password`,
-    {
-      userId,
-      currentPassword,
-      newPassword,
-    },
-    true
-  );
+  const response = await post<any>(`${USERS_URL}/change-password`, {
+    userId,
+    currentPassword,
+    newPassword,
+  });
 
   return getChangePasswordModel(response);
 };

@@ -14,6 +14,15 @@ const LoginPage = () => {
   const { navigateToMainPage, navigateToSignUp } = useNavigate();
 
   const handleLoginClick = async () => {
+    if (!username) {
+      showToast("유저명을 입력해 주세요.", constants.TOAST_TYPES.WARNING);
+      return;
+    }
+
+    if (!password) {
+      showToast("암호를 입력해 주세요.", constants.TOAST_TYPES.WARNING);
+      return;
+    }
     setError(null);
 
     const { success, authenticated, userId } = await fetchLogin(
@@ -41,6 +50,10 @@ const LoginPage = () => {
 
   const handleSignUpClick = () => {
     navigateToSignUp();
+  };
+
+  const handleMainClick = () => {
+    navigateToMainPage();
   };
 
   return (
@@ -100,6 +113,13 @@ const LoginPage = () => {
               아직 계정이 없으십니까?
             </div>
             계정 만들기 <span className="text-green-300">&gt;</span>
+          </div>
+
+          <div
+            className="mt-5 text-center text-sm text-white hover:cursor-pointer hover:text-green-300"
+            onClick={handleMainClick}
+          >
+            메인페이지 <span className="text-green-300">&gt;</span>
           </div>
         </div>
 

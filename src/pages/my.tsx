@@ -11,8 +11,10 @@ import { removeItem } from "@/utils/localStorage";
 import constants from "@/constants";
 import Dialog from "@/components/common/Dialog";
 import CodeInputDialog from "@/components/common/CodeInputDialog";
+import { useFavoriteStore } from "@/stores";
 
 const MyPage: React.FC = () => {
+  const { clearFavorites } = useFavoriteStore();
   const { user, isLoggedIn } = useStorage();
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
@@ -74,6 +76,7 @@ const MyPage: React.FC = () => {
         removeItem(constants.LOCAL_STORAGE.LOGIN);
         removeItem(constants.LOCAL_STORAGE.USER);
 
+        clearFavorites();
         navigateToLogin();
       }
     }

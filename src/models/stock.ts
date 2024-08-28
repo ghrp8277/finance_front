@@ -1,5 +1,8 @@
 import {
+  IAddFavorites,
   IAllStocksByMarketResponse,
+  IDelFavorites,
+  IGetFavorites,
   IMarketsResponse,
   IStocksByCodeResponse,
   IStocksByNameResponse,
@@ -16,7 +19,7 @@ export const getStockListModel = (
     const results = res?.data;
 
     return (
-      results?.all_stocks_by_market ?? {
+      results?.results ?? {
         market_name: constants.NONE,
         stocks: constants.DEFAULT_ITEMS,
         total_elements: constants.DEFAULT_NUM,
@@ -38,7 +41,7 @@ export const getMarketListModel = (res: IApiResponse<IMarketsResponse>) => {
 
   if (success) {
     const results = res?.data;
-    const markets = results?.markets;
+    const markets = results?.results;
     return markets?.markets ?? constants.DEFAULT_ITEMS;
   }
 
@@ -54,7 +57,7 @@ export const getStocksByCodeModel = (
     const results = res?.data;
 
     return (
-      results?.stocks_by_code ?? {
+      results?.results ?? {
         code: constants.NONE,
         total_elements: constants.DEFAULT_NUM,
         total_pages: constants.DEFAULT_NUM,
@@ -80,7 +83,7 @@ export const getStocksByNameModel = (
     const results = res?.data;
 
     return (
-      results?.stocks_by_name ?? {
+      results?.results ?? {
         total_elements: constants.DEFAULT_NUM,
         total_pages: constants.DEFAULT_NUM,
         stocks: constants.DEFAULT_ITEMS,
@@ -92,5 +95,63 @@ export const getStocksByNameModel = (
     total_elements: constants.DEFAULT_NUM,
     total_pages: constants.DEFAULT_NUM,
     stocks: constants.DEFAULT_ITEMS,
+  };
+};
+
+export const getFavoritesModel = (res: IApiResponse<IGetFavorites>) => {
+  const success = res.success;
+
+  if (success) {
+    const data = res?.data;
+
+    return {
+      favorites: data?.results.favorites ?? constants.DEFAULT_ITEMS,
+    };
+  }
+
+  return {
+    favorites: constants.DEFAULT_ITEMS,
+  };
+};
+
+export const getAddFavoritesModel = (res: IApiResponse<IAddFavorites>) => {
+  const success = res.success;
+
+  if (success) {
+    const data = res?.data;
+
+    return {
+      code: data?.results.code ?? constants.DEFAULT_STR,
+      name: data?.results.name ?? constants.DEFAULT_STR,
+      market: data?.results.market ?? constants.DEFAULT_STR,
+    };
+  }
+
+  return {
+    code: constants.DEFAULT_STR,
+    name: constants.DEFAULT_STR,
+    market: constants.DEFAULT_STR,
+  };
+};
+
+export const getDelFavoritesModel = (res: IApiResponse<any>) => {
+  const success = res.success;
+
+  if (success) {
+    const data = res?.data;
+
+    return {
+      code: data?.results.code ?? constants.DEFAULT_STR,
+      name: data?.results.name ?? constants.DEFAULT_STR,
+      market: data?.results.market ?? constants.DEFAULT_STR,
+      success,
+    };
+  }
+
+  return {
+    code: constants.DEFAULT_STR,
+    name: constants.DEFAULT_STR,
+    market: constants.DEFAULT_STR,
+    success,
   };
 };

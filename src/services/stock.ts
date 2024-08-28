@@ -1,12 +1,12 @@
-import { get } from "@/api";
+import { get, post, del } from "@/api";
 import { IPaging } from "@/types/common";
 import {
-  IStockData,
-  IStockResponse,
   IAllStocksByMarketResponse,
   IMarketsResponse,
   IStocksByNameResponse,
   IStocksByCodeResponse,
+  IGetFavorites,
+  IAddFavorites,
 } from "@/types/stock";
 import constants from "@/constants";
 import {
@@ -14,6 +14,9 @@ import {
   getMarketListModel,
   getStocksByNameModel,
   getStocksByCodeModel,
+  getFavoritesModel,
+  getAddFavoritesModel,
+  getDelFavoritesModel,
 } from "@/models/stock";
 
 const STOCK_URL = "stock";
@@ -66,21 +69,32 @@ export const fetchSearchStockCode = async (data: {
   return getStocksByCodeModel(response);
 };
 
-export const parseStockData = (data: any): IStockResponse => {
-  const parsedStocks: IStockData[] = data.stockData.map((item: any) => ({
-    date: item.date,
-    volume: item.volume,
-    close_price: item.closePrice,
-    high_price: item.highPrice,
-    open_price: item.openPrice,
-    low_price: item.lowPrice,
-  }));
+export const fetchGetFavorites = async (
+  paging: IPaging = {
+    page: constants.DEFAULT_PAGING.PAGE,
+    pageSize: constants.DEFAULT_PAGING.PAGESIZE,
+  }
+) => {
+  const response = await get<IGetFavorites>(
+    `${STOCK_URL}/favorites?page=${paging.page}&pageSize=${paging.pageSize}`,
+    undefined,
+    true
+  );
+  return getFavoritesModel(response);
+};
 
-  return {
-    stocks: {
-      stock_code: data.code,
-      market_name: data.marketName,
-      stocks: parsedStocks,
-    },
-  };
+export const fetchAddFavorites = async (userId: number, code: string) => {
+  const response = await post<IAddFavorites>(`${STOCK_URL}/favorites`, {
+    userId,
+    stockCode: code,
+  });
+  return getAddFavoritesModel(response);
+};
+
+export const fetchDelFavorites = async (userId: number, code: string) => {
+  const response = await del(`${STOCK_URL}/favorites`, {
+    userId,
+    stockCode: code,
+  });
+  return getDelFavoritesModel(response);
 };

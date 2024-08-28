@@ -4,6 +4,7 @@ import StockList from "@/components/main/tab/StockList";
 import constants from "@/constants";
 import SearchSection from "@/components/main/tab/SearchSection";
 import SelectBox from "@/components/common/SelectBox";
+import { IFavorit } from "@/types/stock";
 
 type TabContentProps = {
   market: string;

@@ -24,7 +24,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
   const currentTab = tabs[activeTab];
 
   return (
-    <div className="text-green-500">
+    <div className="w-full text-green-500">
       <div className="flex justify-center items-center mb-4 space-x-8">
         {tabs.map((tab, index) => (
           <div

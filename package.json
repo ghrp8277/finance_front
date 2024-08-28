@@ -22,7 +22,8 @@
     "sockjs": "^0.3.24",
     "sockjs-client": "^1.6.1",
     "swr": "^2.2.5",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@types/next": "^8.0.7",

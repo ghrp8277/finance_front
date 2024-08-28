@@ -8,7 +8,7 @@ export interface IStockData {
 }
 
 export interface IStockResponse {
-  stocks: {
+  results: {
     stock_code: string;
     market_name: string;
     stocks: IStockData[];
@@ -16,7 +16,7 @@ export interface IStockResponse {
 }
 
 export interface IStockInfoResponse {
-  stockNames: {
+  results: {
     stock_code: string;
     stock_name: string;
   }[];
@@ -29,7 +29,7 @@ export interface IStock {
 }
 
 export interface IAllStocksByMarketResponse {
-  all_stocks_by_market: {
+  results: {
     total_elements: number;
     total_pages: number;
     market_name: string;
@@ -42,13 +42,13 @@ export interface IMarket {
 }
 
 export interface IMarketsResponse {
-  markets: {
+  results: {
     markets: IMarket[];
   };
 }
 
 export interface IStocksByCodeResponse {
-  stocks_by_code: {
+  results: {
     code: string;
     total_elements: number;
     total_pages: number;
@@ -57,9 +57,37 @@ export interface IStocksByCodeResponse {
 }
 
 export interface IStocksByNameResponse {
-  stocks_by_name: {
+  results: {
     total_elements: number;
     total_pages: number;
     stocks: IStock[];
+  };
+}
+
+export interface IFavorit {
+  market: string;
+  name: string;
+  code: string;
+}
+
+export interface IGetFavorites {
+  results: {
+    favorites: IFavorit[];
+  };
+}
+
+export interface IAddFavorites {
+  results: {
+    market: string;
+    name: string;
+    code: string;
+  };
+}
+
+export interface IDelFavorites {
+  results: {
+    market: string;
+    name: string;
+    code: string;
   };
 }

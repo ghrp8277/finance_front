@@ -9,11 +9,13 @@ import { useStorage } from "@/hooks/useStorage";
 import { useSockJS } from "@/hooks/useSockJS";
 import NotificationDropdown from "../NotificationDropdown";
 import { fetchGetActivitiesUnRead } from "@/services/social";
+import { useFavoriteStore } from "@/stores";
 
 const Header: React.FC = () => {
   const { navigateToLogin, navigateToMainPage, navigateToMy } = useNavigate();
   const { user, isLoggedIn } = useStorage();
   const { subscribe } = useSockJS();
+  const { clearFavorites } = useFavoriteStore();
   const [activities, setActivities] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -32,6 +34,7 @@ const Header: React.FC = () => {
         removeItem(constants.LOCAL_STORAGE.LOGIN);
         removeItem(constants.LOCAL_STORAGE.USER);
 
+        clearFavorites();
         navigateToLogin();
       }
     }

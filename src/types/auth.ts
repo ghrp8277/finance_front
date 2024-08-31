@@ -3,3 +3,11 @@ export interface ILoginResponse {
   accessToken: string;
   userId: number;
 }
+
+export interface IAuthStatusResponse {
+  isAuthenticated: boolean;
+  user: {
+    id: number;
+    username: string;
+  };
+}

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Tabs from "@/components/common/Tabs";
 import { fetchMarketList, fetchGetFavorites } from "@/services/stock";
-import { useStorage } from "@/hooks/useStorage";
-import { IFavorit, IMarket } from "@/types/stock";
+import useAuthStore from "@/stores/authStore";
+import { IMarket } from "@/types/stock";
 import TabContent from "./tab/TabContent";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import Favorites from "./Favorites";
@@ -11,7 +11,7 @@ import { useFavoriteStore } from "@/stores";
 const MainContent: React.FC = () => {
   const [markets, setMarkets] = useState<IMarket[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const { isLoggedIn } = useStorage();
+  const { isLoggedIn } = useAuthStore();
   const { setFavorites } = useFavoriteStore();
 
   useEffect(() => {

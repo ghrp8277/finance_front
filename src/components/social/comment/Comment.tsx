@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Input, Button } from "@/components/index";
 import { IComment } from "@/types/social";
-import { useStorage } from "@/hooks/useStorage";
+import useAuthStore from "@/stores/authStore";
 import {
   fetchIncrementCommentLikes,
   fetchDecrementCommentLikes,
@@ -27,7 +27,7 @@ const Comment: React.FC<CommentProps> = ({
   const [isLiked, setIsLiked] = useState(comment.likedByUser);
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
-  const { isLoggedIn, user } = useStorage();
+  const { isLoggedIn, user } = useAuthStore();
   const { showToast } = useToast();
 
   useEffect(() => {

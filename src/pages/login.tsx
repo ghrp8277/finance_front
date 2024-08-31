@@ -5,8 +5,10 @@ import { useToast } from "@/contexts/ToastContext";
 import constants from "@/constants";
 import { setItem } from "@/utils/localStorage";
 import { useNavigate } from "@/hooks/useNavigate";
+import useAuthStore from "@/stores/authStore";
 
 const LoginPage = () => {
+  const setAuthState = useAuthStore((state) => state.setAuthState);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -31,15 +33,13 @@ const LoginPage = () => {
     );
 
     if (success && authenticated) {
-      const user = JSON.stringify({
-        id: userId,
-        username,
+      setAuthState({
+        isLoggedIn: true,
+        user: {
+          username,
+          id: userId,
+        },
       });
-      setItem(
-        constants.LOCAL_STORAGE.LOGIN,
-        String(constants.DEFAULT_BOOL_TRUE)
-      );
-      setItem(constants.LOCAL_STORAGE.USER, user);
       navigateToMainPage();
 
       showToast(`반갑습니다. ${username}님`, constants.TOAST_TYPES.SUCCESS);

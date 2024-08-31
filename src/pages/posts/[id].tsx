@@ -6,14 +6,14 @@ import {
 } from "@/services/social";
 import { IPost } from "@/types/social";
 import PostDetail from "@/components/social/postForm/PostDetail";
-import { useStorage } from "@/hooks/useStorage";
+import useAuthStore from "@/stores/authStore";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 const PostDetailPage: React.FC = () => {
   const { getQueryParams } = useNavigate();
   const { id } = getQueryParams();
   const [post, setPost] = useState<IPost | null>(null);
-  const { isLoggedIn } = useStorage();
+  const { isLoggedIn } = useAuthStore();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

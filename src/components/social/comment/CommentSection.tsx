@@ -9,7 +9,7 @@ import {
 } from "@/services/social";
 import { IComment } from "@/types/social";
 import { buildCommentTree } from "@/utils/commentUtils";
-import { useStorage } from "@/hooks/useStorage";
+import useAuthStore from "@/stores/authStore";
 import { useToast } from "@/contexts/ToastContext";
 import constants from "@/constants";
 
@@ -30,7 +30,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
   const [commentToDelete, setCommentToDelete] = useState<number | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const { user, isLoggedIn } = useStorage();
+  const { user, isLoggedIn } = useAuthStore();
   const { showToast } = useToast();
 
   const handleAddReply = async (parentCommentId: number, replyText: string) => {

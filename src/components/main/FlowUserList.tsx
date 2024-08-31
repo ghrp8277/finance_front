@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Card, Button } from "@/components/index";
 import { fetchGetUnFollwedUsers, fetchFollowUser } from "@/services/social";
 import { IUserSync } from "@/types/social";
-import { useStorage } from "@/hooks/useStorage";
+import useAuthStore from "@/stores/authStore";
 import { useToast } from "@/contexts/ToastContext";
 import constants from "@/constants";
 
 const FlowUserList: React.FC = () => {
-  const { isLoggedIn, user } = useStorage();
+  const { isLoggedIn, user } = useAuthStore();
   const [users, setUsers] = useState<IUserSync[]>([]);
   const { showToast } = useToast();
 

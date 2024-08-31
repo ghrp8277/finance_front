@@ -4,7 +4,7 @@ import { IStock } from "@/types/stock";
 import { useNavigate } from "@/hooks/useNavigate";
 import { Card } from "@/components/index";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { useStorage } from "@/hooks/useStorage";
+import useAuthStore from "@/stores/authStore";
 import { useFavoriteStore } from "@/stores";
 
 type StockListProps = {
@@ -25,7 +25,7 @@ const StockList: React.FC<StockListProps> = ({
   const [stocks, setStocks] = useState<IStock[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { navigateToStockDetail } = useNavigate();
-  const { user, isLoggedIn } = useStorage();
+  const { user, isLoggedIn } = useAuthStore();
   const { favorites, addFavorite, removeFavorite } = useFavoriteStore();
 
   useEffect(() => {

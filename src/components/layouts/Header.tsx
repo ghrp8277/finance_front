@@ -5,15 +5,15 @@ import { Button } from "..";
 import constants from "@/constants";
 import { removeItem } from "@/utils/localStorage";
 import { fetchLogout } from "@/services/auth";
-import { useStorage } from "@/hooks/useStorage";
 import { useSockJS } from "@/hooks/useSockJS";
 import NotificationDropdown from "../NotificationDropdown";
 import { fetchGetActivitiesUnRead } from "@/services/social";
 import { useFavoriteStore } from "@/stores";
+import useAuthStore from "@/stores/authStore";
 
 const Header: React.FC = () => {
+  const { isLoggedIn, user, logout } = useAuthStore();
   const { navigateToLogin, navigateToMainPage, navigateToMy } = useNavigate();
-  const { user, isLoggedIn } = useStorage();
   const { subscribe } = useSockJS();
   const { clearFavorites } = useFavoriteStore();
   const [activities, setActivities] = useState<any[]>([]);
@@ -31,9 +31,7 @@ const Header: React.FC = () => {
       const success = await fetchLogout(user.id);
 
       if (success) {
-        removeItem(constants.LOCAL_STORAGE.LOGIN);
-        removeItem(constants.LOCAL_STORAGE.USER);
-
+        logout();
         clearFavorites();
         navigateToLogin();
       }

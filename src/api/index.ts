@@ -1,8 +1,7 @@
 import ky from "ky";
 import { handleApiResponse } from "./handleApiResponse";
 import { IApiResponse } from "@/types/common";
-import { getItem } from "@/utils/localStorage";
-import constants from "@/constants";
+import useAuthStore from "@/stores/authStore";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 
@@ -13,7 +12,7 @@ const api = ky.create({
 });
 
 const getUserIdHeader = (): Record<string, string> => {
-  const user = JSON.parse(getItem(constants.LOCAL_STORAGE.USER) || "{}");
+  const user = useAuthStore.getState().user;
   const headers: Record<string, string> = {};
 
   if (user?.id) {
@@ -26,7 +25,8 @@ const getUserIdHeader = (): Record<string, string> => {
 export const get = async <T>(
   url: string,
   params?: Record<string, string | number | boolean>,
-  includeUserId: boolean = false
+  includeUserId: boolean = false,
+  withCredentials: boolean = true
 ): Promise<IApiResponse<T>> => {
   const headers = {
     ...(includeUserId ? getUserIdHeader() : {}),
@@ -35,6 +35,7 @@ export const get = async <T>(
   const options: any = {
     searchParams: params,
     headers,
+    credentials: withCredentials ? "include" : "same-origin",
   };
 
   return handleApiResponse<T>(api.get(url, options).json<T>());

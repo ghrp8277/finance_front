@@ -4,7 +4,7 @@ import { useNavigate } from "@/hooks/useNavigate";
 import { fetchCreatePost } from "@/services/social";
 import { useToast } from "@/contexts/ToastContext";
 import constants from "@/constants";
-import { useStorage } from "@/hooks/useStorage";
+import useAuthStore from "@/stores/authStore";
 
 const PostCreate: React.FC = () => {
   const { getQueryParams, navigateBack, navigateToStockDetail } = useNavigate();
@@ -12,7 +12,7 @@ const PostCreate: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const { showToast } = useToast();
-  const { user } = useStorage();
+  const { user } = useAuthStore();
 
   const handleSubmit = async () => {
     if (title.trim() === "" || content.trim() === "") {

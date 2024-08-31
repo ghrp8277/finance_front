@@ -5,7 +5,7 @@ import Pagination from "@/components/common/Pagination";
 import constants from "@/constants";
 import { formatDateTime } from "../../../utils/dateUtils";
 import Button from "@/components/common/Button";
-import { useStorage } from "@/hooks/useStorage";
+import useAuthStore from "@/stores/authStore";
 import { useNavigate } from "@/hooks/useNavigate";
 
 type PostListProps = {
@@ -19,7 +19,7 @@ const PostList: React.FC<PostListProps> = ({ market, code, name }) => {
   const [currentPage, setCurrentPage] = useState(constants.DEFAULT_PAGING.PAGE);
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize, setPageSize] = useState(constants.DEFAULT_PAGING.PAGESIZE);
-  const { isLoggedIn } = useStorage();
+  const { isLoggedIn } = useAuthStore();
   const { navigateToCreatePost, navigateToPostDetail } = useNavigate();
 
   useEffect(() => {

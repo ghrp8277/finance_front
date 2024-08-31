@@ -2,20 +2,18 @@ import FlowUserList from "@/components/main/FlowUserList";
 import ChangePassword from "@/components/main/ChangePassword";
 import React, { useEffect, useState } from "react";
 import { fetchGetUserById } from "@/services/users";
-import { useStorage } from "@/hooks/useStorage";
+import useAuthStore from "@/stores/authStore";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { formatDateTime } from "@/utils/dateUtils";
 import { fetchLogout } from "@/services/auth";
 import { useNavigate } from "@/hooks/useNavigate";
-import { removeItem } from "@/utils/localStorage";
-import constants from "@/constants";
 import Dialog from "@/components/common/Dialog";
 import CodeInputDialog from "@/components/common/CodeInputDialog";
 import { useFavoriteStore } from "@/stores";
 
 const MyPage: React.FC = () => {
   const { clearFavorites } = useFavoriteStore();
-  const { user, isLoggedIn } = useStorage();
+  const { user, isLoggedIn, logout } = useAuthStore();
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -73,9 +71,7 @@ const MyPage: React.FC = () => {
       const success = await fetchLogout(user.id);
 
       if (success) {
-        removeItem(constants.LOCAL_STORAGE.LOGIN);
-        removeItem(constants.LOCAL_STORAGE.USER);
-
+        logout();
         clearFavorites();
         navigateToLogin();
       }

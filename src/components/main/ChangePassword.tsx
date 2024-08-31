@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Input, Button } from "@/components/index";
 import { fetchChangePassword } from "@/services/users";
-import { useStorage } from "@/hooks/useStorage";
+import useAuthStore from "@/stores/authStore";
 import { useToast } from "@/contexts/ToastContext";
 import constants from "@/constants";
-import Card from "@/components/common/Card";
 
 const ChangePassword: React.FC = () => {
-  const { user } = useStorage();
+  const { user } = useAuthStore();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");

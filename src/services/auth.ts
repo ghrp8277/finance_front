@@ -1,6 +1,10 @@
-import { post } from "@/api";
-import { ILoginResponse } from "@/types/auth";
-import { getLoginModel, getLogoutModel } from "@/models/auth";
+import { get, post } from "@/api";
+import { IAuthStatusResponse, ILoginResponse } from "@/types/auth";
+import {
+  getAuthStatusModel,
+  getLoginModel,
+  getLogoutModel,
+} from "@/models/auth";
 
 const AUTH_URL = "auth";
 
@@ -27,4 +31,14 @@ export const fetchLogout = async (userId: number) => {
   );
 
   return getLogoutModel(response);
+};
+
+export const fetchAuthStatus = async () => {
+  const response = await get<IAuthStatusResponse>(
+    `${AUTH_URL}/status`,
+    undefined,
+    false,
+    true
+  );
+  return getAuthStatusModel(response);
 };

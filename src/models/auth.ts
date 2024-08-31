@@ -1,5 +1,5 @@
 import { IApiResponse } from "@/types/common";
-import { ILoginResponse } from "@/types/auth";
+import { IAuthStatusResponse, ILoginResponse } from "@/types/auth";
 import constants from "@/constants";
 
 export const getLoginModel = (res: IApiResponse<ILoginResponse>) => {
@@ -28,4 +28,26 @@ export const getLogoutModel = (res: IApiResponse<any>) => {
   const success = res.success;
 
   return success;
+};
+
+export const getAuthStatusModel = (res: IApiResponse<IAuthStatusResponse>) => {
+  const success = res.success;
+
+  if (success) {
+    const results = res?.data;
+
+    return {
+      success,
+      isAuthenticated: results?.isAuthenticated ?? constants.DEFAULT_BOOL,
+      username: results?.user.username ?? constants.NONE,
+      id: results?.user.id ?? constants.DEFAULT_NUM,
+    };
+  }
+
+  return {
+    success,
+    isAuthenticated: constants.DEFAULT_BOOL,
+    username: constants.NONE,
+    id: constants.DEFAULT_NUM,
+  };
 };

@@ -1,13 +1,13 @@
 import React from "react";
 import { useNavigate } from "@/hooks/useNavigate";
 import { fetchDelFavorites } from "@/services/stock";
-import { useStorage } from "@/hooks/useStorage";
+import useAuthStore from "@/stores/authStore";
 import { useFavoriteStore } from "@/stores";
 import { IFavorit } from "@/types/stock";
 
 const Favorites: React.FC = () => {
   const { navigateToStockDetail } = useNavigate();
-  const { user } = useStorage();
+  const { user } = useAuthStore();
   const { favorites, removeFavorite } = useFavoriteStore();
 
   const handleNavigateClick = (favorite: IFavorit) => {
